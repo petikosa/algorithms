@@ -6,7 +6,7 @@ const maxInt = int(^uint(0) >> 1)
 
 func main() {
 	a := []int{5, 8, 2, 5, 4, 9, 7, 8, 5, 3, 1, 6}
-	fmt.Println(insertSort(a))
+	fmt.Println(bubbleSort(a))
 }
 
 func findMin(a []int) (int, int) {
@@ -36,7 +36,6 @@ func selectSort(a []int) []int {
 func insertSort(a []int) []int {
 	arrSize := len(a)
 	for i := 1; i < arrSize; i++ {
-		fmt.Println("before", a)
 		j := i - 1
 		update := false
 		for a[i] < a[j] {
@@ -53,8 +52,20 @@ func insertSort(a []int) []int {
 			// delete
 			a = append(a[:i+1], a[i+2:]...)
 		}
+	}
+	return a
+}
 
-		fmt.Println("after ", a)
+func bubbleSort(a []int) []int {
+	swapped := true
+	for swapped {
+		swapped = false
+		for i := 1; i < len(a); i++ {
+			if a[i-1] > a[i] {
+				a[i], a[i-1] = a[i-1], a[i]
+				swapped = true
+			}
+		}
 	}
 	return a
 }
