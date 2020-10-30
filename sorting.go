@@ -6,7 +6,8 @@ const maxInt = int(^uint(0) >> 1)
 
 func main() {
 	a := []int{5, 8, 2, 5, 4, 9, 7, 8, 5, 3, 1, 6}
-	fmt.Println(bubbleSort(a))
+	quickSort(a, 0, 11)
+	fmt.Println(a)
 }
 
 func findMin(a []int) (int, int) {
@@ -68,4 +69,25 @@ func bubbleSort(a []int) []int {
 		}
 	}
 	return a
+}
+
+func partition(a []int, lo int, hi int) int {
+	pivot := a[hi]
+	i := lo
+	for j := lo; j < hi; j++ {
+		if a[j] < pivot {
+			a[i], a[j] = a[j], a[i]
+			i++
+		}
+	}
+	a[i], a[hi] = a[hi], a[i]
+	return i
+}
+
+func quickSort(a []int, lo int, hi int) {
+	if lo < hi {
+		p := partition(a, lo, hi)
+		quickSort(a, lo, p-1)
+		quickSort(a, p+1, hi)
+	}
 }
