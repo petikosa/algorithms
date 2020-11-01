@@ -6,7 +6,7 @@ const maxInt = int(^uint(0) >> 1)
 
 func main() {
 	a := []int{5, 8, 2, 5, 4, 9, 7, 8, 5, 3, 1, 6}
-	quickSort(a, 0, 11)
+	mergeSort(a, 0, 11)
 	fmt.Println(a)
 }
 
@@ -89,5 +89,43 @@ func quickSort(a []int, lo int, hi int) {
 		p := partition(a, lo, hi)
 		quickSort(a, lo, p-1)
 		quickSort(a, p+1, hi)
+	}
+}
+
+func merge(a []int, l int, m int, r int) {
+	n1, n2 := m-l+1, r-m
+	var left = make([]int, n1)
+	var right = make([]int, n2)
+	copy(left, a[l:m+1])
+	copy(right, a[m+1:r+1])
+	i, j, k := 0, 0, l
+	for i < n1 && j < n2 {
+		if left[i] <= right[j] {
+			a[k] = left[i]
+			i++
+		} else {
+			a[k] = right[j]
+			j++
+		}
+		k++
+	}
+	for i < n1 {
+		a[k] = left[i]
+		i++
+		k++
+	}
+	for j < n2 {
+		a[k] = right[j]
+		j++
+		k++
+	}
+}
+
+func mergeSort(a []int, l int, r int) {
+	if l < r {
+		m := (l + r) / 2
+		mergeSort(a, l, m)
+		mergeSort(a, m+1, r)
+		merge(a, l, m, r)
 	}
 }
