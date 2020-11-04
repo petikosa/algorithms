@@ -10,7 +10,7 @@ func main() {
 	tree.add(7)
 	tree.add(4)
 	tree.add(1)
-	bfs(tree.root)
+	fmt.Println(find(tree.root, 4))
 }
 
 type tree struct {
@@ -50,15 +50,30 @@ func dfs(current *node) {
 	dfs(current.right)
 }
 
+func find(current *node, value int) bool {
+	if current == nil {
+		return false
+	}
+	if current.value == value {
+		return true
+	}
+	if value < current.value {
+		return find(current.left, value)
+	} else {
+		return find(current.right, value)
+	}
+}
+
 func bfs(current *node) {
 	if current == nil {
 		return
 	}
-	queue := make([]*node, 0)
+	var queue []*node
 	queue = append(queue, current)
 	for len(queue) > 0 {
-		fmt.Println(current.value)
+		current = queue[0]
 		queue = queue[1:]
+		fmt.Println(current.value)
 		if current.left != nil {
 			queue = append(queue, current.left)
 		}
